@@ -1,0 +1,12 @@
+gitlab:
+  container_name: gitlab-ee
+  image: docker.io/gitlab/gitlab-ee:latest
+  volumes:
+  - '/srv/gitlab/config:/etc/gitlab'
+  - '/srv/gitlab/logs:/var/log/gitlab'
+  - '/srv/gitlab/data:/var/opt/gitlab'
+  ports:
+  - "80:80"
+  - "443:443"
+  - "222:22"
+
