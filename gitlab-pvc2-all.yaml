@@ -1,0 +1,29 @@
+# PV for /var/opt/gitlab
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv2
+spec:
+  capacity:
+    storage: 60Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /nfs/data
+    server: 10.100.8.51
+    readOnly: false
+
+---
+
+# Volume claim for the /var/opt/gitlab folder
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc2
+spec:
+  accessModes:
+  - ReadWriteMany      
+  resources:
+     requests:
+       storage: 60Gi    

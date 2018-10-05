@@ -1,0 +1,8 @@
+# Gitlab version control. To upgrade, comment out the version number in the last
+# line of this file, add an uncommented line containing the desired version and
+# restart the Gitlab cluster. To revert to a previous version, remove the new line
+# and uncomment the previous version number. Some examples below:
+# 10.8.5-ce.0
+# 11.0.3-ce.0
+# 11.0.4-ce.0
+11.3.3-ce.0

@@ -1,0 +1,70 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose -f docker-compose.yml convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gitlab
+  name: gitlab
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gitlab
+    spec:
+      containers:
+      - env:
+        - name: GITLAB_OMNIBUS_CONFIG
+          value: |
+            # These settings are documented in more detail at
+            # https://gitlab.com/gitlab-org/gitlab-ce/blob/a0a826ebdcb783c660dd40d8cb217db28a9d4998/config/gitlab.yml.example#L136
+            gitlab_rails['ldap_label'] = 'zion'
+            gitlab_rails['ldap_enabled'] = true
+            gitlab_rails['ldap_host'] = 'HS-WTG-WDC2.zion.local'
+            gitlab_rails['ldap_port'] = 389
+            gitlab_rails['ldap_uid'] = 'sAMAccountName'
+            gitlab_rails['ldap_method'] = 'plain' # 'ssl' or 'plain'
+            gitlab_rails['ldap_bind_dn'] = 'CN=LDAP Gitlab Service Account,OU=Service Accounts,DC=zion,DC=local'
+            gitlab_rails['ldap_password'] = $(LDAP_PASS)
+            gitlab_rails['ldap_allow_username_or_email_login'] = false
+            gitlab_rails['ldap_base'] = 'OU=WTG Users,DC=zion,DC=local'
+            gitlab_rails['ldap_block_auto_created_users'] = false
+            gitlab_rails['ldap_active_directory'] = true
+            external_url 'http://gitlab.civica.local'
+        - name: LDAP_PASS
+          valueFrom:
+            secretKeyRef:
+              name: gitlab-secrets
+              key: ldap_password
+        image: docker.io/gitlab/gitlab-ce:latest
+        name: gitlab-ee
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        - containerPort: 22
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/gitlab
+          name: gitlab-claim0
+        - mountPath: /var/log/gitlab
+          name: gitlab-claim1
+        - mountPath: /var/opt/gitlab
+          name: gitlab-claim2
+      restartPolicy: Always
+      volumes:
+      - name: gitlab-claim0
+        persistentVolumeClaim:
+          claimName: nfs-pvc0
+      - name: gitlab-claim1
+        persistentVolumeClaim:
+          claimName: nfs-pvc1
+      - name: gitlab-claim2
+        persistentVolumeClaim:
+          claimName: nfs-pvc2
+status: {}

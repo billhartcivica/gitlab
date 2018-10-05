@@ -1,0 +1,29 @@
+# Volume for the /etc/gitlab folder
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv0
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /nfs/config
+    server: 10.100.8.51
+    readOnly: false
+
+---
+
+# Volume claim for the /etc/gitlab folder
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-pvc0
+spec:
+  accessModes:
+  - ReadWriteMany      
+  resources:
+     requests:
+       storage: 20Gi    
