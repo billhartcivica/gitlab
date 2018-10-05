@@ -1,4 +1,7 @@
 #!/bin/sh
+##################################################
+# Startup script for running Gitlab under K8s    #
+##################################################
 # Set the Gitlab version from the glversion.cnf file and set as an environment parameter
 export GLVER=`cat glversion.cnf | grep -v '#'`
 echo Starting GitLab Version: $GLVER

@@ -1,5 +1,7 @@
-export ver=`cat glversion.cnf | grep -v '#'`
-echo $ver
+#!/bin/sh
+##################################################
+# Shutdown script for running Gitlab under K8s   #
+##################################################
 # Delete the Gitlab service
 kubectl delete -f /etc/k8s/gitlab/gitlab-service.yaml
 # Delete the Gitlab deployment
