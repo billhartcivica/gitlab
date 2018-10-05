@@ -1,11 +1,13 @@
 export ver=`cat test.txt | grep -v '#'`
 echo $ver
+# Delete the Gitlab service
+# kubectl delete -f /etc/k8s/gitlab/gitlab-service.yaml
+# Delete the Gitlab deployment
+# kubectl delete -f /etc/k8s/gitlab/gitlab-deployment.yaml
 # Delete the Persistent Volumes and Volume Claims
-kubectl delete -f ./gitlab-pvc0-all.yaml
-kubectl delete -f ./gitlab-pvc1-all.yaml
-kubectl delete -f ./gitlab-pvc2-all.yaml
+kubectl delete -f /etc/k8s/gitlab/gitlab-pvc0-all.yaml
+kubectl delete -f /etc/k8s/gitlab/gitlab-pvc1-all.yaml
+kubectl delete -f /etc/k8s/gitlab/gitlab-pvc2-all.yaml
 # Delete the LDAP secret to authenticate to the LDAP server
-kubectl delete -f ../gitlab-secrets/secrets.yaml
+kubectl delete -f /etc/k8s/gitlab-secrets/secrets.yaml
 
-# Create the Gitlab deployment
-# kubectl create -f ./gitlab-deployment.yaml
