@@ -42,7 +42,7 @@ spec:
             gitlab_rails['ldap_block_auto_created_users'] = false
             gitlab_rails['ldap_active_directory'] = true
             external_url 'http://gitlab.civica.local'
-        image: docker.io/gitlab/gitlab-ce:10.8.7-ce.0
+        image: docker.io/gitlab/gitlab-ce:$GLVER
         name: gitlab-ce
         ports:
         - containerPort: 80
