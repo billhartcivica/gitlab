@@ -9,16 +9,17 @@ metadata:
     io.kompose.service: gitlab
   name: gitlab
 spec:
+  type: NodePort
   ports:
   - name: "80"
     port: 80
-    targetPort: 80
+    nodePort: 30080
   - name: "443"
     port: 443
-    targetPort: 443
-  - name: "222"
-    port: 222
-    targetPort: 22
+    nodePort: 30443
+  - name: "22"
+    port: 22
+    nodePort: 30022
   selector:
     io.kompose.service: gitlab
 status:
