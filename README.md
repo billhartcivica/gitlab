@@ -2,7 +2,7 @@
 
 ### Configuration
 
-Clone this repository, remembering to create a corresponding secrets.yaml file to contain the LDAP authentication password. The format for this fileshould be as follows:
+Clone this repository into an /etc/k8s folder, remembering to create a corresponding secrets.yaml file to contain the LDAP authentication password. The secrets file should be contained in the /etc/k8s/secrets folder, which you should create if it doesn't already exist. The format for this fileshould be as follows:
 
 ```
 apiVersion: v1
@@ -17,4 +17,24 @@ To encode a base64 string into a secret that can be parsed to a secrets file wit
 ```
 echo -n "mysecretword" | base64
 ```
+The -n entry above ensures that the 'newline' character is omitted from the output. Otherwise the encoded secret won't work.
 
+The master node provides the NFS exports that the cluster uses to mount the persistent storage used for configuration, logging and data. A partition for NFS exports is mounted a /nfs and the corresponding folders are as follows:
+```
+/nfs/config - Mounts within the container as /etc/gitlab 
+/nfs/data   - Mounts within the container as /var/log/gitlab
+/nfs/logs   - Mounts within the container as /var/opt/gitlab
+```
+The NFS exports file is configured to allow read/write access to all slave nodes within the cluster:
+```
+/nfs/config     10.100.8.52(rw) 10.100.8.53(rw)
+/nfs/logs       10.100.8.52(rw) 10.100.8.53(rw)
+/nfs/data       10.100.8.52(rw) 10.100.8.53(rw)
+```
+The start.sh and stop.sh scripts create all the required resources in the correct order. Generally, these should be:
+1. Secrets
+2. Volume Mounts
+3. Deployment (Gitlab instance)
+4. Services (Exposed services and ports)
+
+An HAProxy service running on the master node forwards all requests back to each of the cluster slave nodes running the exposed nodeports.
