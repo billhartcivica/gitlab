@@ -1,4 +1,4 @@
-# Docker-compose file for Gitlab.
+# Gitlab Kubernetes Deployment using NFS exports as Persistent Storage.
 
 ### Configuration
 
