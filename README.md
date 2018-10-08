@@ -1,4 +1,4 @@
-# Gitlab Kubernetes Deployment using NFS exports as Persistent Storage.
+# Gitlab Kubernetes Deployment using NFS exports as Persistent Storage and LDAP Authentication.
 
 ### Configuration
 
