@@ -13,6 +13,7 @@ kubectl create -f /etc/k8s/secrets/secrets.yaml
 kubectl create -f /etc/k8s/gitlab/gitlab-pvc0-all.yaml
 kubectl create -f /etc/k8s/gitlab/gitlab-pvc1-all.yaml
 kubectl create -f /etc/k8s/gitlab/gitlab-pvc2-all.yaml
+# Display physical volumes and volume claims 
 kubectl get pv
 kubectl get pvc
 # Create the Gitlab deployment

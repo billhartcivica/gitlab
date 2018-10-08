@@ -19,7 +19,7 @@ echo -n "mysecretword" | base64
 ```
 The -n entry above ensures that the 'newline' character is omitted from the output. Otherwise the encoded secret won't work.
 
-The master node provides the NFS exports that the cluster uses to mount the persistent storage used for configuration, logging and data. A partition for NFS exports is mounted a /nfs and the corresponding folders are as follows:
+The master node provides the NFS exports that the cluster uses to mount the persistent storage used for configuration, logging and data. A partition for NFS exports is mounted on /nfs and the corresponding folders are as follows:
 ```
 /nfs/config - Mounts within the container as /etc/gitlab 
 /nfs/data   - Mounts within the container as /var/log/gitlab
