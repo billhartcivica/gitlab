@@ -39,6 +39,6 @@ The start.sh and stop.sh scripts create all the required resources in the correc
 3. Deployment (Gitlab instance)
 4. Services (Exposed services and ports)
 
-An HAProxy service running on the master node forwards all requests back to each of the cluster slave nodes running the exposed nodeports.
+An HAProxy service running on the master node forwards all requests back to each of the cluster slave nodes running the exposed nodeports. This can be configured in round-robin fashion, pointing to the backend nodes on the listening port for Gitlab (in this example, 30080/TCP0).
 
 
